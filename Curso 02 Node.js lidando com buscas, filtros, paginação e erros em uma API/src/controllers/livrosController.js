@@ -2,7 +2,7 @@ import livro from "../models/Livro.js";
 
 class LivroController {
 
-  static listarLivros = async (req, res) => {
+  static async listarLivros(req, res) {
     try {
       const listaLivros = await livro.find({})
       res.status(200).json(listaLivros);
@@ -11,7 +11,7 @@ class LivroController {
     };
   };
 
-  static listarLivroPorId = async (req, res) => {
+  static async listarLivroPorId(req, res) {
     try {
       const id = req.params.id;
       const livroResultados = await livro.findById(id);
@@ -21,7 +21,7 @@ class LivroController {
     };
   };
 
-  static cadastrarLivro = async (req, res) => {
+  static async cadastrarLivro(req, res) {
     const novoLivro = req.body;
     try {
       await livro.create(novoLivro);
@@ -31,7 +31,7 @@ class LivroController {
     };
   };
 
-  static atualizarLivro = async (req, res) => {
+  static async atualizarLivro(req, res) {
     try {
       const id = req.params.id;
       await livro.findByIdAndUpdate(id, req.body);
@@ -41,7 +41,7 @@ class LivroController {
     };
   };
 
-  static async excluirLivro (req, res) {
+  static async excluirLivro(req, res) {
     try {
       const id = req.params.id;
       await livro.findByIdAndDelete(id);
@@ -51,10 +51,10 @@ class LivroController {
     };
   };
 
-  static listarLivroPorEditora = async (req, res) => {
+  static async listarLivroPorEditora(req, res) {
     try {
       const editora = req.query.editora;
-      const livrosResultado = await livro.find({"editora": editora});
+      const livrosResultado = await livro.find({ editora: editora });
       res.status(200).send(livrosResultado);
     } catch (erro) {
       res.status(500).json({ message: "Erro interno no servidor" });
