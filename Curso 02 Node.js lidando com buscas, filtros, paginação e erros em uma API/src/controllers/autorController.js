@@ -2,7 +2,7 @@ import autor from "../models/Autor.js";
 
 class AutorController {
 
-  static async listarAutoreslistarAutores(req, res) {
+  static async listarAutores(req, res) {
     try {
       const autoresResultado = await autor.find({});
       res.status(200).json(autoresResultado);
@@ -14,8 +14,8 @@ class AutorController {
   static async listarAutorPorId(req, res) {
     const id = req.params.id;
     try {
-      const autorResultado = await autor.findById(id);
-      res.status(200).send(autorResultado);
+      const autorEncontrado = await autor.findById(id);
+      res.status(200).send(autorEncontrado);
     } catch (erro) {
       res.status(400).json({message: `${erro.message} - Id do Autor não localizado.`});
     };
@@ -25,7 +25,7 @@ class AutorController {
     const novoAutor = req.body;
     try {
       await autor.create(novoAutor);
-      res.status(201).send("Autor cadastrado");
+      res.status(201).send("Autor cadastrado com sucesso");
     } catch (erro) {
       res.status(500).json({message: `${erro.message} - falha ao cadastrar Autor.`});
     };
