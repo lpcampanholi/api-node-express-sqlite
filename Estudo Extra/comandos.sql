@@ -23,3 +23,10 @@ INSERT INTO usuarios (id, nome, email, idade) VALUES
 (5, "Enzo Almeida", "enzoalmeida@mail.com", 12);
 
 SELECT * FROM usuarios;
+
+DELETE FROM usuarios WHERE id = 4;
+
+UPDATE usuarios SET nome = "Hermerde Andrade" WHERE id = 5;
+
+INSERT INTO usuarios (id, nome, email, idade) VALUES
+(4 "Joana Magalhães", "joanamagalhaes.com", 24);
