@@ -17,7 +17,6 @@ const Postagem = sequelize.define("postagens", {
   },
   conteudo: {
     type: Sequelize.TEXT,
-
   }
 });
 
@@ -37,11 +36,27 @@ const Usuario = sequelize.define ("usuarios", {
 });
 
 // CRIAR TABELAS - Está comentado porque deve ser excutado apenas uma vez para não repetir a criação das Tabelas
+
 // Usuario.sync( {force: true} );
 // Postagem.sync( {force: true} );
 
 // Criar novo registro
-Postagem.create({
-  titulo: "A ordem cronológica dos filmes para assistir a saga de Harry Potter",
-  conteudo: "Saiba a ordem dos filmes de Harry Potter e como se encaixam ainda Animais Fantásticos e outros projetos do mundo bruxo da série"
+
+// Postagem.create({
+//   titulo: "A ordem cronológica dos filmes para assistir a saga de Harry Potter",
+//   conteudo: "Saiba a ordem dos filmes de Harry Potter e como se encaixam ainda Animais Fantásticos e outros projetos do mundo bruxo da série"
+// });
+
+// Usuario.create({
+//   nome: "Luís",
+//   sobrenome: "Campanholi",
+//   idade: 29,
+//   email: "lpcampanholi@gmail.com"
+// });
+
+Usuario.create({
+  nome: "Ana",
+  sobrenome: "Beatriz",
+  idade: 32,
+  email: "anabeatriz@mail.com"
 });
