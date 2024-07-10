@@ -33,6 +33,11 @@ app.post("/usuarios", (req, res) => {
   });
 });
 
+app.post("/castanhas", (req, res) => {
+  console.log(req.body);
+  res.send("Dados recebidos");
+});
+
 const port = 8081;
 
 app.listen(port, () => {
