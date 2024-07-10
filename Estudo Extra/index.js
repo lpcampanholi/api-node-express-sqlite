@@ -14,7 +14,7 @@ app.use(express.json());
 // Rotas
 
 app.get("/", (req, res) => {
-  res.send("Seja bem-vindo ao meu app!");
+  res.sendFile(__dirname + "/html/home.html");
 });
 
 app.get("/usuarios", (req, res) => {
@@ -27,7 +27,7 @@ app.post("/usuarios", (req, res) => {
     email: req.body.email,
     idade: req.body.idade,
   }).then(() => {
-    res.send("Usuário criado com sucesso");
+    res.redirect("/");
   }).catch((erro) => {
     res.status(500).send(`Houve um erro. ${erro}`);
   });
