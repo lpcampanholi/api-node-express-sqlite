@@ -21,7 +21,7 @@ class AutorController {
         res.status(404).send( {message: "Id do Autor não localizado"} );
       };
     } catch (erro) {
-      next(erro);
+      next(erro); 
     };
   };
 

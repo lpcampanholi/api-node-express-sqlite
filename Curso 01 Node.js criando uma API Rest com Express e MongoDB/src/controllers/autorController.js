@@ -7,46 +7,52 @@ class AutorController {
       const listaAutores = await autor.find({});
       res.status(200).json(listaAutores);
     } catch(erro) {
-      res.status(500).send(`Erro ao buscar os Autores. ${erro.message}`);
+      next(erro);
     };
   };
 
-  static async consultarAutorPorId(req, res) {
+  static async consultarAutorPorId(req, res, next) {
     try {
       const id = req.params.id;
       const autorEncontrado = await autor.findById(id);
-      res.status(200).json(autorEncontrado);
+      
+      if (autorEncontrado !== null) {
+        res.status(200).json(autorEncontrado);
+      } else {
+        res.status(404).send({message: "Id do Autor não localizado"});
+      };
+
     } catch(erro) {
-      res.status(500).send(`Autor não encontrado - ${erro.message}`);
+      next(erro);
     };
   };
 
-  static async cadastrarAutor(req, res) {
+  static async cadastrarAutor(req, res, next) {
     try {
       const novoAutor = await autor.create(req.body);
       res.status(201).json({message: "Autor cadastrado com sucesso", autor: novoAutor});
     } catch(erro) {
-      res.status(500).send(`Falha ao cadastrar autor. Erro:${erro.message}`);
+      next(erro);
     };
   };
 
-  static async atualizarAutor(req, res) {
+  static async atualizarAutor(req, res, next) {
     try {
       const id = req.params.id;
       await autor.findByIdAndUpdate(id, req.body);
       res.status(200).send("Autor atualizado");
     } catch(erro) {
-      res.status(500).send(`Não foi possível atualizar o autor. Erro: ${erro.message}`);
+      next(erro);
     };
   };
 
-  static async excluirAutor(req, res) {
+  static async excluirAutor(req, res, next) {
     try {
       const id = req.params.id;
       const autorExcluido = await autor.findByIdAndDelete(id);
       res.status(200).send("Autor excluído");
     } catch(erro) {
-      res.status(500).send(`Não foi possível excluir o autor. Erro: ${erro.message}`);
+      next(erro);
     };
   };
 
