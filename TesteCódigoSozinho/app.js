@@ -8,6 +8,7 @@ db.once("open", () => {
   console.log("Conexão com o Banco feita com sucesso");
 });
 
+// Iniciar o express
 const app = express();
 
 // Configurar rotas
