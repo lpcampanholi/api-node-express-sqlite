@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         scope: { status: 'matriculado' },
         as: 'aulasMatriculadas'
       });
+      Pessoa.hasMany(models.Matricula, {
+        foreignKey: "estudante_id",
+        as: 'todasAsMatriculadas'
+      });
     };
   }
   Pessoa.init({
@@ -23,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: {
           args: [3, 30],
-          msg: 'O campo nome deve ter no mínimo 3 caracteres'
+          msg: 'O campo nome deve ter no mínimo 3 caracteres e no máximo 30 caracteres'
         }
       }
     },

@@ -1,19 +1,11 @@
 # Express e Sequelize
 
-## Seeds
-  - Comando para criar seeds: ``
-  - Comando para rodar seeds: ``
-
-## Migrações
-  - Comando para criar migrações: ``
-  - Comando para rodar migrações: ``
-
 ## Soft delete
-  - através de `paranoid: true` no modelo. É necessário criar a coluna "deletedAt" nas tabelas.
+  - Adicionar propriedade `paranoid: true` no modelo.
+  - É necessário criar a coluna "deletedAt" nas tabelas. Para isso, criar o arquivo em migrações com o método `.addColumn`. Ou executar o comando `npx sequelize migration:create --name add-deleteAt-to-pessoas` Em seguida, executar as migrações com `npx squelize-cli db:migrate`.
   
-  
-  ## Escopo padrão
-  Acessar apenas as pessoas ativas por padrão. Adicionar no modelo:
+## Escopo padrão (escopo de modelo)
+Acessar apenas as pessoas ativas por padrão. Adicionar no modelo:
     ```js
     defaultScope: {
       where: {
@@ -22,6 +14,8 @@
     }
     ```
   ## Escopos
+
+  Fluxo: modelo > Services > PessoasServices > PessoaController > PessoaRoutes
 
   No modelo adicionar a propriedade:
 
@@ -68,22 +62,6 @@ E finalmente adicionar nas rotas:
 ```js
 router.get("/pessoas/todos", (req, res) => pessoaController.pegaTodasAsPessoas(req, res));
 ```
-## Validação do e-mail
-
-No modelo pessoa:
-
-```js
-    email: {
-      type: DataTypes.STRING,
-      validate: {
-        isEmail: {
-          args: true,
-          msg: 'Formato do email inválido'
-        }
-      }
-    },
-```
-
 ## Validação de email:
 
 No modelo pessoa:
@@ -101,9 +79,40 @@ No modelo pessoa:
 
 ```
 
-## Validação de CPF
+## Validação de String
+(mínimo 3 caracteres, máximo de 30 caracteres)
 
-Criar arquivo `validaCpfHelper.js` na pasta `utils` com a função de validação:
+No modelo pessoa:
+
+```js
+    nome: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [3, 30],
+          msg: 'O campo nome deve ter no mínimo 3 caracteres e no máximo 30 caracteres'
+        }
+      }
+    },
+
+```
+
+## Validação de CPF (validação customizada)
+
+- Adicionar validação no modelo pessoa:
+
+```js
+    cpf: {
+      type: DataTypes.STRING,
+      validate: {
+        cpfIsValid: (cpf) => {
+          if (!isCpfValido(cpf)) throw new Error("Número de CPF inválido");
+        }
+      }
+    },
+```
+
+- Criar arquivo `validaCpfHelper.js` na pasta `utils` com a função de validação:
 
 ```js
 module.exports = (cpf) => {
@@ -126,3 +135,5 @@ const isCpfValido = require("../../utils/validaCpfHelper.js");
       }
     },
 ```
+
+http://localhost:3000/cursos?data_inicial=2023-05-01&data_final=2023-09-01
